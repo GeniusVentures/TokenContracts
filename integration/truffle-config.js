@@ -13,12 +13,12 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: '*', // eslint-disable-line camelcase
     },
-    rinkeby: {
+    ropsten: {
       provider: function () {
         let privateKeys = [privateKey];
-        return new HDWalletProvider(privateKeys, "https://rinkeby.infura.io/v3/" + infuraKey)
+        return new HDWalletProvider(privateKeys, "https://ropsten.infura.io/v3/" + infuraKey)
       },
-      network_id: 4, // eslint-disable-line camelcase
+      network_id: 3, // eslint-disable-line camelcase
       gas: 5500000, // Ropsten has a lower block limit than mainnet
       confirmations: 2, // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)

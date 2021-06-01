@@ -5,3 +5,5 @@ node_modules
 
 # local env variables
 .env
+pakcage-lock.json
+
