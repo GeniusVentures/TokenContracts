@@ -1,0 +1,7 @@
+# Dependency directory
+.vscode
+.idea
+node_modules
+
+# local env variables
+.env
