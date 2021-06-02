@@ -159,7 +159,7 @@ contract GeniusTokens is Ownable, ERC20 {
         // Check gnus token before receive eth
         require(msg.value > 0, "You have sent 0 ether!");
         uint256 tokenAmount = calcTokenAmount(msg.value);
-        require(gnusBalance() >= tokenAmount, "You have sent too much eth amount");
+        // require(gnusBalance() >= tokenAmount, "You have sent too much eth amount");
         require(soldTokens + tokenAmount <= ICO_SUPPLY, "ERC20Capped: cap exceeded");
         _mint(address(msg.sender), tokenAmount);
         soldTokens += tokenAmount;
