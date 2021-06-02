@@ -1,4 +1,9 @@
-## ICO Contracts for GNUS token with Ethereum
+## GNUS Token and ICO contract are integrated
+### GNUS token Info
+- Token name: Genius Tokens
+- Token Symbol: GNUS
+- 50 million limit - 7.38 million to owner's contract, 36.9 million in ICO, so only 5.72 million left to mint
+### ICO Contracts for GNUS token with Ethereum
 - Deposit ETH (Detect ETH and Amount)
 - Send GNUS (Detect Receiver and Manage Balances)
 - Widthraw ETH (Only Owner)

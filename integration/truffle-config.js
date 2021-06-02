@@ -11,9 +11,6 @@ module.exports = {
     ganache: {
       host: '127.0.0.1', // Localhost (default: none)
       port: 7545, // Standard Ethereum port (default: none)
-      gas: 5500000,
-      confirmations: 2,
-      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       network_id: '*', // eslint-disable-line camelcase
     },
     ropsten: {
