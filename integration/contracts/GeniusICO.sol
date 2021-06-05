@@ -30,7 +30,7 @@ contract GeniusICO is Ownable {
     function getCurrentStage() public view returns(uint256) {
         uint256 step = 0;
         for (uint256 i = 0; i < stageStartsAt.length; i++) {
-            if (soldTokens<stageStartsAt[i]) {
+            if (soldTokens<=stageStartsAt[i]) {
                 step = i;
                 break;
             }
