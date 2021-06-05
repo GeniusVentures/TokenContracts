@@ -19,3 +19,6 @@ fourth 12,500 Ethreum = 6,400,000 GNUS = 1 ETH TO 512 GNUS
 ## Testing in Ganache and Rinkeby
 - Contract Name: ICOContract
 - address: [0xB65dBbb4952091E80590a60DB6136b5cFa3b7D3b](https://rinkeby.etherscan.io/address/0xB65dBbb4952091E80590a60DB6136b5cFa3b7D3b)
+
+## Building and Testing.
+Use `yarn generate` to generate the typescript files for the smart contract under build/types
