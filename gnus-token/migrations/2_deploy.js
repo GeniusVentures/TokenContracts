@@ -1,5 +1,5 @@
-const GNUSToken = artifacts.require('GNUSToken');
+const GeniusTokens = artifacts.require('GeniusTokens');
 
 module.exports = async function (deployer, network, accounts) {
-    await deployer.deploy(GNUSToken);
+    await deployer.deploy(GeniusTokens);
 };
