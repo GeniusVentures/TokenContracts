@@ -20,12 +20,10 @@ contract('GeniusTokens', (accounts) => {
         await gnusTokenInstance.sendTransaction({ from: accounts[1], value: web3.utils.toWei('1'), gas: 100000, gasPrice: 20 });
 
         // now grab the balance of accounts[0] and make sure they have 1,000 GNUS tokens
-        const act0GNUSRaw = await gnusTokenInstance.balanceOf(accounts[1]);
-        // convert raw units to whole tokens
-        const act0GNUSAmount = act0GNUSRaw/1e18;
-        // balanceof returns raw amount , not tokens
+        const act0GNUSAmount = (await gnusTokenInstance.balanceOf(accounts[1])).div(WeiToEth);
 
-        assert(act0GNUSAmount == 1000, 'Genius Tokens Balance should equal 1,000 but is ' + act0GNUSAmount.toString());
+
+        assert(act0GNUSAmount.eq(new BN(1000)), 'Genius Tokens Balance should equal 1,000 but is ' + act0GNUSAmount.toString());
     });
 
     it('should make sure ETH added is equal to minted GNUS * ICO steps', async () => {
@@ -33,7 +31,7 @@ contract('GeniusTokens', (accounts) => {
         // have to wait until one transaction is done
         await testSendEth;
 
-        const gnusSoldTokens = await gnusTokenInstance.gnusBalance();
+        const gnusSoldTokens = (await gnusTokenInstance.gnusBalance()).div(WeiToEth);
         const gnusTokenEthBalance = (await gnusTokenInstance.ethBalance()).div(WeiToEth).mul(new BN(1000));
 
         assert(gnusSoldTokens.eq(gnusTokenEthBalance),
