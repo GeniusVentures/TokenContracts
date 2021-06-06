@@ -11,7 +11,7 @@ contract GeniusICO {
 
     function getCurrentStage() internal view returns(uint256) {
         uint256 step = 0;
-        for (uint256 i = 0; i < stageStartsAt.length; i++) {
+        for (uint256 i = 1; i < stageStartsAt.length; i++) {
             if (soldTokens < stageStartsAt[i]) {
                 step = i;
                 break;
