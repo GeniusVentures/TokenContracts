@@ -38,7 +38,7 @@ contract('GeniusTokens', (accounts) => {
             'Eth Token Balance * 1000 (' + gnusTokenEthBalance.toString() + ') is not equal to GNUS tokens sold: ' + gnusSoldTokens.toString());
 
     });
-    it('should send GNUS token correctly', async () => {
+    var transferTest=it('should send GNUS token correctly', async () => {
         const gnusTokenInstance = await GeniusTokens.deployed();
 
         // Setup 2 accounts.
@@ -59,5 +59,21 @@ contract('GeniusTokens', (accounts) => {
 
         assert(accountOneEndingBalance.eq(accountOneStartingBalance.sub(amount)), "Amount wasn't correctly taken from the sender");
         assert(accountTwoEndingBalance.eq(accountTwoStartingBalance.add(amount)), "Amount wasn't correctly sent to the receiver");
+    });
+    it("should handle buying more than left in stage correctly", async () => {
+        console.log("this test will fail if ganache isnt started with the account balance option set above 12,5K ether")
+        await transferTest;
+
+        // send 12,500 ETH , This should push it 1 eth into the 2nd stage
+
+        const gnusTokenInstance = await GeniusTokens.deployed();
+        await gnusTokenInstance.sendTransaction({ from: accounts[0], value: web3.utils.toWei('12500'), gas: 100000, gasPrice: 20 });
+        // The amount of tokens sold now should be 12,500,000 in 1 stage +  800
+        const expectedTokens=new BN("12500800");
+
+        //  tokens sold
+        const gnusSoldTokens = (await gnusTokenInstance.gnusBalance()).div(WeiToEth);
+
+        assert(gnusSoldTokens.eq(expectedTokens),"Sold tokens ("+gnusSoldTokens.toString() +") not equal to expected amount 12,500,800")
     });
 });
