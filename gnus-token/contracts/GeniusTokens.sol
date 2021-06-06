@@ -61,7 +61,7 @@ contract GeniusTokens is Ownable, ERC20, GeniusICO {
     }
 
     function gnusBalance() public view returns(uint256) {
-        return IERC20(address(this)).balanceOf(address(this));
+        return soldTokens;
     }
 
     function ethBalance() public view returns(uint256) {

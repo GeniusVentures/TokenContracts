@@ -2,6 +2,10 @@ const GeniusTokens = artifacts.require("GeniusTokens");
 const BN = require('bn.js');
 
 contract('GeniusTokens', (accounts) => {
+
+    // default 1 ether / wei
+    const WeiToEth = new BN(web3.utils.toWei('1'));
+
     it('should put 7380000 GNUS Tokens in the first account', async () => {
         const gnusTokenInstance = await GeniusTokens.deployed();
         const balance = web3.utils.fromWei(await gnusTokenInstance.balanceOf(accounts[0]));
@@ -25,10 +29,11 @@ contract('GeniusTokens', (accounts) => {
         // have to wait until one transaction is done
         await testSendEth;
 
-        const gnusTokenBalance = (new BN(web3.utils.fromWei(await gnusTokenInstance.gnusBalance()))).mul(new BN("1000"));
-        const gnusTokenEthBalance = new BN(web3.utils.fromWei(await gnusTokenInstance.ethBalance()));
+        const gnusSoldTokens = await gnusTokenInstance.gnusBalance();
+        const gnusTokenEthBalance = (await gnusTokenInstance.ethBalance()).div(WeiToEth).mul(new BN(1000));
 
-        assert(gnusTokenBalance.eq(gnusTokenEthBalance), 'Eth Token Balance not equal to GNUS * 1000, ' + gnusTokenBalance.toString() + ',' + gnusTokenEthBalance.toString());
+        assert(gnusSoldTokens.eq(gnusTokenEthBalance),
+            'Eth Token Balance * 1000 (' + gnusTokenEthBalance.toString() + ') is not equal to GNUS tokens sold: ' + gnusSoldTokens.toString());
 
     });
     it('should send GNUS token correctly', async () => {
