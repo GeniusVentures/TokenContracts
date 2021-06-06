@@ -33,11 +33,13 @@ contract('GeniusTokens', (accounts) => {
         // have to wait until one transaction is done
         await testSendEth;
 
-        const gnusSoldTokens = await gnusTokenInstance.gnusBalance();
-        const gnusTokenEthBalance = (await gnusTokenInstance.ethBalance()).div(WeiToEth).mul(new BN(1000));
-
-        assert(gnusSoldTokens.eq(gnusTokenEthBalance),
-            'Eth Token Balance * 1000 (' + gnusTokenEthBalance.toString() + ') is not equal to GNUS tokens sold: ' + gnusSoldTokens.toString());
+        const tokenRate=new BN(1000)
+        const gnusSoldTokensRaw =  await gnusTokenInstance.gnusBalance();
+        const gnusEthBalanceRaw = await gnusTokenInstance.ethBalance();
+        const gnusSoldTokens = gnusSoldTokensRaw.div(WeiToEth);
+        const gnusEthBalance = gnusEthBalanceRaw.div(WeiToEth);
+        assert(gnusSoldTokensRaw.div(tokenRate).eq(gnusEthBalanceRaw),
+            'Gnus tokens sold (' + gnusSoldTokens.toString() + ') / rate (1000) is not equal to ETH Balance: ' + gnusEthBalance.toString());
 
     });
     it('should send GNUS token correctly', async () => {
