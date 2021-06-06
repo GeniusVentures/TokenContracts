@@ -11,20 +11,20 @@
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^4.1.0",
+    "@typechain/truffle-v5": "^5.0.0",
+    "@types/chai": "^4.0.0",
+    "@types/mocha": "^8.2.2",
+    "@types/web3": "^1.2.2",
+    "bn-chai": "^1.0.1",
+    "bn.js": "^4.11.0",
+    "chai": "^4.3.4",
     "dotenv": "^10.0.0",
     "truffle": "^5.3.7",
     "truffle-hdwallet-provider": "^1.0.17",
     "truffle-plugin-verify": "^0.5.8",
-    "typescript": "^4.3.2"
-  },
-  "devDependencies": {
-    "eth-gas-reporter": "^0.2.22",
-    "@typechain/truffle-v5": "^5.0.0",
-    "@types/chai": "^4.2.18",
-    "@types/mocha": "^8.2.2",
-    "@types/web3": "^1.2.2",
-    "bn.js": "^5.2.0",
+    "truffle-typings": "^1.0.8",
     "ts-node": "^10.0.0",
-    "typechain": "^5.0.0"
+    "typechain": "^5.0.0",
+    "typescript": "^4.3.2"
   }
 }

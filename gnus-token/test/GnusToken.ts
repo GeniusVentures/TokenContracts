@@ -1,19 +1,19 @@
 const GeniusTokens = artifacts.require("GeniusTokens");
+const BN = require('bn.js');
 
 contract('GeniusTokens', (accounts) => {
     it('should put 7380000 GNUS Tokens in the first account', async () => {
         const gnusTokenInstance = await GeniusTokens.deployed();
-        const balance = await gnusTokenInstance.balanceOf(accounts[0]);
+        const balance = web3.utils.fromWei(await gnusTokenInstance.balanceOf(accounts[0]));
 
-        assert.equal(balance.toString(), "7380000", "7380000 wasn't in the first account");
+        assert.equal(balance, "7380000", "7380000 wasn't in the first account");
     });
-    it('should call a function that depends on a linked library', async () => {
+    it('should make sure ETH added is equal to minted GNUS * ICO steps', async () => {
         const gnusTokenInstance = await GeniusTokens.deployed();
-        const gnusTokenBalance = (await gnusTokenInstance.gnusBalance()).toNumber();
-        const gnusTokenEthBalance = (await gnusTokenInstance.ethBalance()).toNumber();
+        const gnusTokenBalance = (new BN(web3.utils.fromWei(await gnusTokenInstance.gnusBalance()))).mul(new BN("1000"));
+        const gnusTokenEthBalance = new BN(web3.utils.fromWei(await gnusTokenInstance.ethBalance()));
 
-        // need to check all balances here based on step in the ICO
-        assert.equal(gnusTokenEthBalance, 1000 * gnusTokenBalance, 'Library function returned unexpected function, linkage may be broken');
+        assert(gnusTokenBalance.eq(gnusTokenEthBalance), 'Eth Token Balance not equal to GNUS * 1000, ' + gnusTokenBalance.toString() + ',' + gnusTokenEthBalance.toString());
     });
     it('should send GNUS token correctly', async () => {
         const gnusTokenInstance = await GeniusTokens.deployed();
@@ -23,18 +23,18 @@ contract('GeniusTokens', (accounts) => {
         const accountTwo = accounts[1];
 
         // Get initial balances of first and second account.
-        const accountOneStartingBalance = (await gnusTokenInstance.balanceOf(accountOne)).toNumber();
-        const accountTwoStartingBalance = (await gnusTokenInstance.balanceOf(accountTwo)).toNumber();
+        const accountOneStartingBalance = await gnusTokenInstance.balanceOf(accountOne);
+        const accountTwoStartingBalance = await gnusTokenInstance.balanceOf(accountTwo);
 
         // Make transaction from first account to second.
-        const amount = 10;
+        const amount = new BN(web3.utils.toWei('10'));
         await gnusTokenInstance.transfer(accountTwo, amount, { from: accountOne });
 
         // Get balances of first and second account after the transactions.
-        const accountOneEndingBalance = (await gnusTokenInstance.balanceOf(accountOne)).toNumber();
-        const accountTwoEndingBalance = (await gnusTokenInstance.balanceOf(accountTwo)).toNumber();
+        const accountOneEndingBalance = await gnusTokenInstance.balanceOf(accountOne);
+        const accountTwoEndingBalance = await gnusTokenInstance.balanceOf(accountTwo);
 
-        assert.equal(accountOneEndingBalance, accountOneStartingBalance - amount, "Amount wasn't correctly taken from the sender");
-        assert.equal(accountTwoEndingBalance, accountTwoStartingBalance + amount, "Amount wasn't correctly sent to the receiver");
+        assert(accountOneEndingBalance.eq(accountOneStartingBalance.sub(amount)), "Amount wasn't correctly taken from the sender");
+        assert(accountTwoEndingBalance.eq(accountTwoStartingBalance.add(amount)), "Amount wasn't correctly sent to the receiver");
     });
 });
