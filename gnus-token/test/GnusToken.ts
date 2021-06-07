@@ -61,13 +61,13 @@ contract('GeniusTokens', (accounts) => {
         assert(accountTwoEndingBalance.eq(accountTwoStartingBalance.add(amount)), "Amount wasn't correctly sent to the receiver");
     });
     it("should handle buying more than left in stage correctly", async () => {
-        console.log("this test will fail if ganache isnt started with the account balance option set above 12,5K ether")
+        console.log("this test will fail if ganache isn't started with the account balance option set above 12,5K ether");
         await transferTest;
 
         // send 12,500 ETH , This should push it 1 eth into the 2nd stage
 
         const gnusTokenInstance = await GeniusTokens.deployed();
-        await gnusTokenInstance.sendTransaction({ from: accounts[0], value: web3.utils.toWei('12500'), gas: 100000, gasPrice: 20 });
+        await gnusTokenInstance.sendTransaction({ from: accounts[0], value: web3.utils.toWei('12500'), gas: 500000, gasPrice: 20 });
         // The amount of tokens sold now should be 12,500,000 in 1 stage +  800
         const expectedTokens=new BN("12500800");
 

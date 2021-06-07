@@ -11,12 +11,11 @@ contract GeniusTokens is Ownable, ERC20, GeniusICO {
     string private constant NAME = "Genius Tokens";
     // modify token symbol
     string private constant SYMBOL = "GNUS";
-    // modify token decimal
-    uint8 private constant DECIMALS = 18;
 
-    uint256 public constant INIT_SUPPLY = 7380000 * (10**uint256(DECIMALS)); // 7.38 million tokens
-    uint256 public constant ICO_SUPPLY = 36900000 * (10**uint256(DECIMALS));  // 36.9 million tokens
-    uint256 public constant MAX_SUPPLY = 50000000 * (10**uint256(DECIMALS)); // 50 million tokens
+
+    uint256 public constant INIT_SUPPLY = 7380000 * 1e18; // 7.38 million tokens
+    uint256 public constant ICO_SUPPLY = 36900000 * 1e18;  // 36.9 million tokens
+    uint256 public constant MAX_SUPPLY = 50000000 * 1e18; // 50 million tokens
 
     mapping (address => bool) _minters;
     mapping (address => bool) _burners;

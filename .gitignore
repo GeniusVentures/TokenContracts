@@ -1,1 +1,3 @@
 .idea
+test/package-lock.json
+test/node_modules

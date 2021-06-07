@@ -3,7 +3,8 @@ require("ts-node/register");
 
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const privateKey = process.env.privateKey;
-const infuraKey = process.env.infuraKey
+const infuraKey = process.env.infuraKey;
+
 module.exports = {
   api_keys: {
     etherscan: process.env.etherKey
@@ -14,10 +15,13 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: '*', // eslint-disable-line camelcase
     },
+    // make sure you run this first 'ganache-cli -a 5 -e 500000 >ganache.log &'
     test: {
       host: '127.0.0.1', // Localhost (default: none)
-      port: 8545, // ganache port
-      network_id: '*', // eslint-disable-line camelcase
+      port: 8545, // Standard Ethereum port (default: none)
+      network_id: '*',
+      gas: 5500000,
+      defaultEtherBalance: 50000
     },
     ropsten: {
       provider: function () {

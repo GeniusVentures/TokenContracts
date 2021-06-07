@@ -7,40 +7,40 @@ contract GeniusICO {
 
     uint256 public soldTokens = 0;
     uint256[] public rates = [1000, 800, 640, 512];
-    uint256[] public stageStartsAt=[0,12500000,22500000,30500000,36900000];
+    uint256[] public stageEndsAt = [12500000*1e18,22500000*1e18,30500000*1e18,36900000*1e18];
 
-    function getCurrentStage() internal view returns(uint256) {
-        uint256 step = 0;
-        for (uint256 i = 0; i < stageStartsAt.length; i++) {
-            if (soldTokens > stageStartsAt[i]) {
-                step = i;
+    function getCurrentStage() internal view returns(uint8) {
+        uint8 stage;
+        for (stage = 0; stage < stageEndsAt.length; stage++) {
+            if (soldTokens < stageEndsAt[stage]) {
                 break;
             }
         }
-        return step;
+        return stage;
     }
 
-    function calcTokenAmount(uint256 ethAmount) internal view returns(uint256) {
-        uint256 stage= getCurrentStage();
+function calcTokenAmount(uint256 weiAmount) internal view returns(uint256) {
+        uint8 stage = getCurrentStage();
         uint256 tokenAmount = 0;
-        uint256 remainingEthAmount = ethAmount;
-        bool capExceeded = false;
-        while (remainingEthAmount !=0 && !capExceeded) {
-            uint256 nextStage = stageStartsAt[stage+1];
-            uint256 remainingTokensInStage = (nextStage - soldTokens)*10**18;
-            uint256 tokensSoldInStage = (remainingEthAmount*rates[stage]);
-            if (tokensSoldInStage > remainingTokensInStage){
-                // if we sold more than left in the current stage , and its last stage , we reached cap
-                if (stage == rates.length){
-                    capExceeded = true;
-                }
+        uint256 remainingWeiAmount = weiAmount;
+        uint256 curTokensSold = soldTokens;
+        while ((remainingWeiAmount != 0) && (stage < stageEndsAt.length)) {
+            uint256 remainingTokensInStage = (stageEndsAt[stage] - curTokensSold);
+            uint256 tokensSoldInStage = (remainingWeiAmount * rates[stage]);
+            uint256 valueSold;
+            if (tokensSoldInStage > remainingTokensInStage) {
                 tokensSoldInStage = remainingTokensInStage;
+                valueSold = (tokensSoldInStage / rates[stage]);
+                stage++;
+            } else {
+                valueSold = (tokensSoldInStage / rates[stage]);
             }
             tokenAmount += tokensSoldInStage;
-            uint256 valueSold = (tokensSoldInStage / rates[stage]);
-            remainingEthAmount -= valueSold;
+            curTokensSold += tokensSoldInStage;
+            remainingWeiAmount -= valueSold;
         }
-        require(!capExceeded, "Not enough tokens left for ETH sent!");
+        // don't let user buy rest of tokens, sent to much ETH
+        require(remainingWeiAmount == 0, "Not enough tokens left for ETH sent!");
         return tokenAmount;
     } 
 }
