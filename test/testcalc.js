@@ -1,42 +1,74 @@
 
+const BN = require('BN.js');
 
-var soldTokens = 0;
-var rates = [1000, 800, 640, 512];
-var stageEndsAt = [12500000*1e18, 22500000*1e18, 305000000*1e18, 36900000*1e18];
+const DECIMALS = new BN("1e18");
+var GNUSSoldTokens = new BN(0) * DECIMALS;
+var weiReceived = new BN(0) * DECIMALS
+var rates = [new BN(1000), new BN(800), new BN(640), new BN(512)];
+var stageEndsAtWei = [new BN(12500) * DECIMALS, new BN(25000) * DECIMALS,
+    new BN(37500) * DECIMALS, new BN(50000) * DECIMALS];
+var stage = 0;
 
-var soldTokens = calcTokenAmount(12501*1e18);
+console.log('Decimal places should be 1e18 : ' + DECIMALS.toString());
 
-console.log('soldTokens amount is: ' + soldTokens.toFixed().toString());
+var testValue = calcTokenAmount(new BN(12501) * DECIMALS);
 
-function getCurrentStage() {
-    var stage;
-    for (stage = 0; stage < stageEndsAt.length; stage++) {
-        if (soldTokens < stageEndsAt[stage]) {
-            break;
-        }
-    }
-    return stage;
+console.log('GNUS Tokens sold is: ' + testValue.toString() +
+    ' Total GNUS Tokens: ' + GNUSSoldTokens.toString() + ' stage: ' + stage.toString());
+
+// should throw assertion, but we want to continue.
+testValue = calcTokenAmount(new BN(50000) * DECIMALS);
+
+// go up to 49,999 ETH now
+testValue = calcTokenAmount(new BN(37498) * DECIMALS);
+console.log('GNUS Tokens sold is: ' + testValue.toString() +
+    ' Total GNUS Tokens: ' + GNUSSoldTokens.toString() + ' stage: ' + stage.toString());
+
+// go up to 50,000 ETH now
+testValue = calcTokenAmount(new BN(1) * DECIMALS);
+console.log('GNUS Tokens sold is: ' + testValue.toString() +
+    ' Total GNUS Tokens: ' + GNUSSoldTokens.toString() + ' stage: ' + stage.toString());
+
+if (weiReceived != stageEndsAtWei[stageEndsAtWei.length-1]) {
+    console.log('Wei Received ' + weiReceived.toString() +
+        ' does to equal max wei to sell: ' + stageEndsAtWei[stageEndsAtWei.length - 1].toString()
+        + ' stage: ' + stage.toString());
 }
 
+weiReceived = new BN(0) * DECIMALS;
+GNUSSoldTokens = new BN(0) * DECIMALS;
+stage = 0;
+
+testValue = calcTokenAmount(new BN(50000) * DECIMALS)
+
+console.log('GNUS Tokens sold is: ' + testValue.toString() +
+    ' Total GNUS Tokens: ' + GNUSSoldTokens.toString() + ' stage: ' + stage.toString());
+
+console.log('End of Tests');
+
 function calcTokenAmount(weiAmount) {
-    var stage = getCurrentStage();
-    var tokenAmount = 0;
+    var curWeiReceived = weiReceived;
     var remainingWeiAmount = weiAmount;
-    var curTokensSold = soldTokens;
-    while ((remainingWeiAmount != 0) && (stage < stageEndsAt.length)) {
-        var remainingTokensInStage = (stageEndsAt[stage] - curTokensSold);
-        var tokensSoldInStage = (remainingWeiAmount * rates[stage]);
-        var valueSold;
-        if (tokensSoldInStage > remainingTokensInStage) {
-            tokensSoldInStage = remainingTokensInStage;
-            valueSold = (tokensSoldInStage / rates[stage]);
-            stage++;
-        } else {
-            valueSold = (tokensSoldInStage / rates[stage]);
+    var GNUSTokenAmount = new BN(0) * DECIMALS;
+    var curStage = stage;
+    while ((remainingWeiAmount != 0) && (curStage < stageEndsAtWei.length)) {
+        var weiLeftInStage = stageEndsAtWei[curStage] - curWeiReceived;
+        var WeiToUse = (weiLeftInStage <  remainingWeiAmount) ? weiLeftInStage : remainingWeiAmount;
+        GNUSTokenAmount += (WeiToUse * rates[curStage]);
+        remainingWeiAmount -= WeiToUse;
+        curWeiReceived += WeiToUse;
+        if (remainingWeiAmount != 0) {
+            curStage++;
         }
-        tokenAmount += tokensSoldInStage;
-        curTokensSold += tokensSoldInStage;
-        remainingWeiAmount -= valueSold;
     }
-    return tokenAmount;
+
+    if (remainingWeiAmount != 0) {
+        console.log('To Much Ethereum Sent: ' + weiAmount.toString() +
+            ' remaining ' + remainingWeiAmount.toString());
+        return new BN(0) * DECIMALS;
+    }
+    stage = curStage;
+    weiReceived = curWeiReceived;
+    GNUSSoldTokens += GNUSTokenAmount;
+    return GNUSTokenAmount;
 }

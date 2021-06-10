@@ -4,7 +4,9 @@
   "description": "",
   "main": "testcalc.js",
   "dependencies": {
-    "bn.js": "^5.2.0"
+    "assert": "^2.0.0",
+    "bn.js": "^5.2.0",
+    "chai": "^4.3.4"
   },
   "devDependencies": {},
   "scripts": {

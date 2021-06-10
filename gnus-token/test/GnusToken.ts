@@ -31,8 +31,8 @@ contract('GeniusTokens', (accounts) => {
         // have to wait until one transaction is done
         await testSendEth;
 
-        const gnusSoldTokens = (await gnusTokenInstance.gnusBalance()).div(WeiToEth);
-        const gnusTokenEthBalance = (await gnusTokenInstance.ethBalance()).div(WeiToEth).mul(new BN(1000));
+        const gnusSoldTokens = (await gnusTokenInstance.GNUSBalance()).div(WeiToEth);
+        const gnusTokenEthBalance = (await gnusTokenInstance.ETHBalance()).div(WeiToEth).mul(new BN(1000));
 
         assert(gnusSoldTokens.eq(gnusTokenEthBalance),
             'Eth Token Balance * 1000 (' + gnusTokenEthBalance.toString() + ') is not equal to GNUS tokens sold: ' + gnusSoldTokens.toString());
@@ -67,13 +67,15 @@ contract('GeniusTokens', (accounts) => {
         // send 12,500 ETH , This should push it 1 eth into the 2nd stage
 
         const gnusTokenInstance = await GeniusTokens.deployed();
+
         await gnusTokenInstance.sendTransaction({ from: accounts[0], value: web3.utils.toWei('12500'), gas: 500000, gasPrice: 20 });
+
         // The amount of tokens sold now should be 12,500,000 in 1 stage +  800
         const expectedTokens=new BN("12500800");
 
         //  tokens sold
-        const gnusSoldTokens = (await gnusTokenInstance.gnusBalance()).div(WeiToEth);
+        const gnusSoldTokens = (await gnusTokenInstance.GNUSBalance()).div(WeiToEth);
 
-        assert(gnusSoldTokens.eq(expectedTokens),"Sold tokens ("+gnusSoldTokens.toString() +") not equal to expected amount 12,500,800")
+        assert(gnusSoldTokens.eq(expectedTokens),"Sold tokens (" + gnusSoldTokens.toString() + ") not equal to expected amount 12,500,800")
     });
 });
