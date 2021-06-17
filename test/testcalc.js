@@ -1,7 +1,7 @@
 
 const BN = require('BN.js');
 
-const DECIMALS = new BN("1e18");
+const DECIMALS = new BN("10")**new BN(18);
 var GNUSSoldTokens = new BN(0) * DECIMALS;
 var weiReceived = new BN(0) * DECIMALS
 var rates = [new BN(1000), new BN(800), new BN(640), new BN(512)];

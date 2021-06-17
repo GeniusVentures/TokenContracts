@@ -17,8 +17,11 @@ third 12,500 Ethereum = 8,000,000 GNUS = 1  ETH TO 640 GNUS
 fourth 12,500 Ethreum = 6,400,000 GNUS = 1 ETH TO 512 GNUS
 ```
 ## Testing in Ganache and Rinkeby
-- Contract Name: ICOContract
-- address: [0xB65dBbb4952091E80590a60DB6136b5cFa3b7D3b](https://rinkeby.etherscan.io/address/0xB65dBbb4952091E80590a60DB6136b5cFa3b7D3b)
+- Contract Name: GeniusTokens
 
 ## Building and Testing.
 Use `yarn generate` to generate the typescript files for the smart contract under build/types
+
+Make sure ganache-cli is installed `npm -g install ganache-cli`
+
+`,/truffle-test` will launch ganache-cli in background and run tests and then kill ganache-cli

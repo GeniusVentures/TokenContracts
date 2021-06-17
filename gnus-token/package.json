@@ -1,11 +1,12 @@
 {
-  "name": "ico-contract",
+  "name": "gnus-token",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "generate": "truffle compile && typechain --target truffle-v5 --out-dir build/types './build/**/*.json'",
-    "prepare": "yarn generate"
+    "prepare": "yarn generate",
+    "test": "ganache-cli -a 5 -e 50000 && truffle test"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "@types/web3": "^1.2.2",
     "bn-chai": "^1.0.1",
     "bn.js": "^4.11.0",
+    "catch-exit": "^1.1.0",
     "chai": "^4.3.4",
     "dotenv": "^10.0.0",
     "ganache-cli": "^6.12.2",

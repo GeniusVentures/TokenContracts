@@ -15,13 +15,10 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: '*', // eslint-disable-line camelcase
     },
-    // make sure you run this first 'ganache-cli -a 5 -e 500000 >ganache.log &'
     test: {
-      host: '127.0.0.1', // Localhost (default: none)
-      port: 8545, // Standard Ethereum port (default: none)
+      host: '127.0.0.1',
+      port: 8545,
       network_id: '*',
-      gas: 5500000,
-      defaultEtherBalance: 50000
     },
     ropsten: {
       provider: function () {
