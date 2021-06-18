@@ -18,6 +18,7 @@ contract GeniusTokens is ERC20, ERC20Burnable, AccessControl {
     // ICO data
     uint256 public GNUSSoldTokens = 0;
     uint256 public weiReceived = 0;
+    bool ITOisPaused = false;
     uint256[] public rates = [1000, 800, 640, 512];
     uint256[] public stageEndsAtWei = [12500 * DECIMALS, 25000 * DECIMALS, 37500 * DECIMALS, 50000 * DECIMALS];
     uint8 internal stage = 0;
@@ -79,10 +80,16 @@ contract GeniusTokens is ERC20, ERC20Burnable, AccessControl {
         to.transfer(_amount);
     }
 
+    // pause the Token offering
+    function pauseITO(bool pause) public virtual onlyAdmin {
+        ITOisPaused = pause;
+    }
+
     // Detect receiving eth
     receive () external payable {
         // Check GNUS token before receive ETH
         require(msg.value > 0, "You have sent 0 ether!");
+        require(!ITOisPaused, "ITO is currently paused!");
         uint256 tokenAmount = calcTokenAmount(msg.value);
         _mint(address(msg.sender), tokenAmount);
     }

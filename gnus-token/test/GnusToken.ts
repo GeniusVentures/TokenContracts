@@ -2,11 +2,11 @@ const GeniusTokens = artifacts.require("GeniusTokens");
 //const BN = require('bn.js');
 import BN from "bn.js";
 
-// Test Set 1
-contract('GeniusTokens', (accounts) => {
+// default 1 ether / wei
+const EthToWei = new BN(web3.utils.toWei('1'));
 
-    // default 1 ether / wei
-    const EthToWei = new BN(web3.utils.toWei('1'));
+// Test Set 1
+contract('Genius Tokens Test Set 1', (accounts) => {
 
     it('should put 7380000 GNUS Tokens in the first account', async () => {
         const gnusTokenInstance = await GeniusTokens.deployed();
@@ -112,14 +112,12 @@ contract('GeniusTokens', (accounts) => {
 });
 
 // Test set 2
-contract('GeniusTokens', (accounts) => {
-    // default 1 ether / wei
-    const EthToWei = new BN(web3.utils.toWei('1'));
+contract('Genius Tokens Test Set 2', (accounts) => {
 
     it('Should fail trying to set minter', async () => {
         const gnusTokenInstance = await GeniusTokens.deployed();
         try {
-            const good = await gnusTokenInstance.addMinter(accounts[1], {from: accounts[1]});
+            await gnusTokenInstance.addMinter(accounts[1], {from: accounts[1]});
             assert(false, 'This should have thrown an error but didn\'t');
         } catch (e )
         {
@@ -165,8 +163,6 @@ contract('GeniusTokens', (accounts) => {
         // this should give/mint the remaining GNUS tokens to account 2
         await gnusTokenInstance.mint(accounts[2], leftSupply, {from: accounts[1]});
 
-        //totalSupply = await gnusTokenInstance.totalSupply();
-
         try {
             // this should fail since we are at maximum GNUS tokens
             await gnusTokenInstance.mint(accounts[2], new BN(web3.utils.toWei('1')), {from: accounts[1]});
@@ -174,11 +170,14 @@ contract('GeniusTokens', (accounts) => {
         } catch (e) {
             assert(e.reason == 'Minting would exceed max supply', e.reason);
         }
+
     });
 
     // Now account 2 has GNUS tokens let's burn them
     it('Test to Burn our own tokens', async() => {
         const gnusTokenInstance = await GeniusTokens.deployed();
+
+        const totalSupply = await gnusTokenInstance.totalSupply();
 
         var GNUSTokensBalance = await gnusTokenInstance.balanceOf(accounts[2]);
 
@@ -186,6 +185,16 @@ contract('GeniusTokens', (accounts) => {
         
         // burn 1/2 the tokens ourselves
         await gnusTokenInstance.burn(halfTokens, {from: accounts[2]});
+
+        const newTotalSupply = await gnusTokenInstance.totalSupply();
+
+        assert(!totalSupply.eq(newTotalSupply),
+            'Should have burn\'t ' + halfTokens.toString() + ' but didn\'t work.');
+
+        const amountBurned = totalSupply.sub(newTotalSupply);
+        assert(amountBurned.eq(halfTokens),
+            'Total burned was ' + amountBurned.toString() +
+            ` but should equal ` + halfTokens.toString());
     });
 
     // let account[1] try and burn the rest of account 2,
@@ -203,8 +212,84 @@ contract('GeniusTokens', (accounts) => {
         const endGNUSTokens = await gnusTokenInstance.balanceOf(accounts[3]);
 
         assert(endGNUSTokens.sub(startGNUSTokens).eq(toMint),
-            'Amounted minted does not equal amount requested to mine');
+            'Amounted minted does not equal amount requested to mint');
 
+    });
+
+});
+
+// ETH Amount, Iterations, GNUS Minted
+const icoTestsAmounts = [
+    [100, 10, 1000*1000],
+    [500, 50, (12500*1000)+(12500*800)],
+    [2500, 20, (12500*1000)+(12500*800)+(12500*640)+(12500*512)],
+    [10000, 5, (12500*1000)+(12500*800)+(12500*640)+(12500*512)]
+];
+
+// Test set 3..icoTestsAmounts.length
+for (let i = 0; i < icoTestsAmounts.length; i++ ) {
+        contract('Genius Tokens Test Set ' + (i + 3).toString(), (accounts) => {
+
+            it('Test for ITO with ' + icoTestsAmounts[i][0].toString() +
+                ' ETH repeated ' + icoTestsAmounts[i][1].toString() + ' times.',
+                async () => {
+                    const gnusTokenInstance = await GeniusTokens.deployed();
+                    const ethToSend = (new BN(icoTestsAmounts[i][0])).mul(EthToWei);
+                    for (let j = 0; j < icoTestsAmounts[i][1]; j++) {
+                        await gnusTokenInstance.sendTransaction({
+                            from: accounts[i+1],
+                            value: ethToSend,
+                            gas: 120000,
+                            gasPrice: 20
+                        });
+                    }
+                    const gnusAccountBalance = await gnusTokenInstance.balanceOf(accounts[i+1]);
+                    const gnusShouldBalance = (new BN(icoTestsAmounts[i][2])).mul(EthToWei);
+                    assert(gnusAccountBalance.eq(gnusShouldBalance),
+                        'Account balance is ' + gnusAccountBalance.toString() +
+                        ' but should equal ' + gnusShouldBalance.toString());
+                });
+        });
+}
+
+contract('Genius Tokens Test Set 7', (accounts) => {
+
+    it('Test for pausing ITO', async () => {
+        const gnusTokenInstance = await GeniusTokens.deployed();
+
+        await gnusTokenInstance.pauseITO(true);
+        const ethToSend = (new BN(100)).mul(EthToWei);
+        try {
+            await gnusTokenInstance.sendTransaction({
+                from: accounts[1],
+                value: ethToSend,
+                gas: 120000,
+                gasPrice: 20
+            });
+            assert(false, 'Sending ETH should fail with ITO paused.');
+        } catch (e) {
+           assert(e.reason == 'ITO is currently paused!', e.reason);
+        }
+
+        try {
+            await gnusTokenInstance.pauseITO(false, {from: accounts[1]});
+            assert(false, 'Only Admin should be be able to pause/unpause ITO');
+        } catch (e) {
+           assert(e.reason == 'Restricted to admins.', e.reason);
+        }
+    });
+
+    it('Test for un-pausing ITO', async () => {
+        const gnusTokenInstance = await GeniusTokens.deployed();
+
+        await gnusTokenInstance.pauseITO(false);
+        const ethToSend = (new BN(100)).mul(EthToWei);
+        await gnusTokenInstance.sendTransaction({
+            from: accounts[1],
+            value: ethToSend,
+            gas: 120000,
+            gasPrice: 20
+        });
     });
 
 });
