@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2018", "DOM"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "ES2018",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["@types/node", "@types/chai", "@types/mocha", "truffle-typings"]
+  },
+
+  "include": ["./build/types/*.ts", "./test/*.ts"]
+
+}

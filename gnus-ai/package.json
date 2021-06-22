@@ -1,8 +1,11 @@
 {
-  "name": "gnus-token",
+  "name": "gnus-ai",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Genius Tokens AI processing contract",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "generate": "truffle compile && typechain --target truffle-v5 --out-dir build/types './build/**/*.json'",
     "prepare": "yarn generate",

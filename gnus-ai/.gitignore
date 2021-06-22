@@ -1,0 +1,10 @@
+# Dependency directory
+.vscode
+.idea
+node_modules
+build
+
+# local env variables
+.env
+pakcage-lock.json
+
