@@ -6,14 +6,26 @@ import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
 
 contract EscrowAIJob is ConditionalEscrow {
     PaymentSplitter _payees;
+    uint256 private escrowAmount;
+    bytes32 public constant VERIFIER_ROLE = keccak256("VERIFIER_ROLE");
 
-    constructor() public {
+    constructor(uint256 amount) public {
+        // save total escrowAmount for later
+        escrowAmount = amount;
+    }
+
+    modifier onlyVerifier()
+    {
+        require(hasRole(VERIFIER_ROLE, msg.sender), "Restricted to verifiers.");
+        _;
     }
 
     function withdrawalAllowed(address payee) public view virtual returns (bool) {
-        // logic here for allowing withdrawals to all payees
-    };
+        require(_payees.)
+        // logic here for allowing withdrawals to a payee
+    }
 
-    function setPayees() public {}
+    function addPayees(address payees[]) public external {
+    }
 
 }
