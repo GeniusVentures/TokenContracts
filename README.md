@@ -3,7 +3,7 @@
 ## The gnus-token directory contains the Initial Token Offering contract using OpenZeppelin.
 * The contract takes ETH (Ethereum) and returns GNUS Tokens.
 * 20% is reserved for the developers and on-going enhancements to Genius AI processing System as well as to Game Developers to develop games 
-* 20% will be put into wrapped tokens (GNUS/ETH) using uniswap for liquidity and stability of the GNUS tokens
+* 20% will be put into wrapped tokens (GNUS/ETH) using Uniswap for liquidity and stability of the GNUS tokens
 * The remaining 60% will be left in the ICO Contract until the AI Processing system is used and the GNUS tokens are used for AI/ML Processing.
 
 ## The gnus-ai directory contains a WIP for the Escrow and Payment Splits among the AI Proccessing devices and also is using OpenZeppelin.
