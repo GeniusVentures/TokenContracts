@@ -47,9 +47,9 @@ module.exports = {
       provider: function () {
         return new HDWalletProvider(privateKey, "https://mainnet.infura.io/v3/" + infuraKey)
         },
-        network_id: '*',
+        network_id: 1,
         gas: 5500000,
-	gasPrice: 15000000000,
+	    gasPrice: 15000000000,
         confirmations: 2, // # of confs to wait between deployments. (default: 0)
         timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
         skipDryRun: false, // Skip dry run before migrations? (default: false for public nets )
@@ -70,6 +70,11 @@ module.exports = {
   plugins: [
     'truffle-plugin-verify'
   ],
+
+  api_keys: {
+    etherscan: process.env.ETHERSCAN_API_KEY
+  },
+
   // this is required by truffle to find any ts test files
   test_file_extension_regexp: /.*\.ts$/,
 };
