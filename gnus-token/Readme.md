@@ -34,3 +34,7 @@ Make sure ganache-cli is installed `npm -g install ganache-cli`
 ![0x033524b1BA83CEABD8452C08dCAFe71966b9b3F6](images/GNUS-Token-QR-Code.png)
 
 0x033524b1BA83CEABD8452C08dCAFe71966b9b3F6
+
+## How to Set Up GNUS Tokens in Trust Wallet
+
+[![images/AddGNUStoTW-ss.png]](https://www.youtube.com/embed/rDxEJ2jwmrQ){width=50%}
