@@ -293,3 +293,45 @@ contract('Genius Tokens Test Set 7', (accounts) => {
     });
 
 });
+
+contract('Genius Tokens Test Set 8', (accounts) => {
+
+    it('Test for granting admin roll to account 1', async () => {
+        const gnusTokenInstance = await GeniusTokens.deployed();
+        await gnusTokenInstance.grantRole('0x00', accounts[1]);
+    });
+
+    it('Test for renouncing Super Admin roll', async () => {
+        const gnusTokenInstance = await GeniusTokens.deployed();
+        // try to renounce admin role for SuperAdmin
+        try {
+            await gnusTokenInstance.renounceRole('0x00', accounts[0]);
+        } catch (e) {
+            assert(e.reason == 'Cannot renounce superAdmin from Admin Role', e.reason);
+        }
+
+        // try to revoke admin role for SuperAdmin from admin account[1]
+        try {
+            await gnusTokenInstance.revokeRole('0x00', accounts[0], {from: accounts[1]});
+        } catch (e) {
+            assert(e.reason == 'Cannot revoke superAdmin from Admin Role', e.reason);
+        }
+    });
+
+    it('Test for renouncing admin role for account[1]', async () => {
+        const gnusTokenInstance = await GeniusTokens.deployed();
+
+        // remove ourselves from admin roll
+        await gnusTokenInstance.renounceRole('0x00', accounts[1], {from: accounts[1]});
+
+        // try to revoke admin role for SuperAdmin from admin account[1]
+        try {
+            await gnusTokenInstance.revokeRole('0x00', accounts[1], {from: accounts[1]});
+            assert(false, 'This should have failed because we are no longer an admin.');
+        } catch (e) {
+            assert(e.reason == 'Restricted to admins.', e.reason);
+        }
+    });
+
+
+});
