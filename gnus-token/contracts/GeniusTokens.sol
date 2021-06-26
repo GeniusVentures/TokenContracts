@@ -25,10 +25,12 @@ contract GeniusTokens is ERC20, ERC20Burnable, AccessControl {
     uint256 public constant INIT_SUPPLY = 7380000 * DECIMALS;  // 7.38 million tokens
     uint256 public constant ICO_SUPPLY = 36900000 * DECIMALS;  // 36.9 million tokens
     uint256 public constant MAX_SUPPLY = 50000000 * DECIMALS;  // 50 million tokens
+    address public superAdmin;
 
     constructor () ERC20(NAME, SYMBOL) {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(MINTER_ROLE, msg.sender);
+        superAdmin = msg.sender;
         mint(msg.sender, INIT_SUPPLY);
     }
 
@@ -56,9 +58,15 @@ contract GeniusTokens is ERC20, ERC20Burnable, AccessControl {
     function removeMinter(address account) public virtual onlyAdmin {
         revokeRole(MINTER_ROLE, account);
     }
-    /// @dev Remove oneself from the admin role.
-    function renounceAdmin() public virtual {
-        renounceRole(DEFAULT_ADMIN_ROLE, msg.sender);
+
+    function renounceRole(bytes32 role, address account) public virtual override {
+        require(!(hasRole(DEFAULT_ADMIN_ROLE, account) && (superAdmin == account)), "Cannot renounce superAdmin from Admin Role");
+        super.renounceRole(role, account);
+    }
+
+    function revokeRole(bytes32 role, address account) public virtual override onlyAdmin {
+        require(!(hasRole(DEFAULT_ADMIN_ROLE, account) && (superAdmin == account)), "Cannot revoke superAdmin from Admin Role");
+        super.revokeRole(role, account);
     }
 
     function GNUSBalance() public view returns(uint256) {
