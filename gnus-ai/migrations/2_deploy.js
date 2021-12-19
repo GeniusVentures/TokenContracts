@@ -1,5 +1,5 @@
-const GeniusTokens = artifacts.require('GeniusAI');
+const PolyGNUSToken = artifacts.require('PolyGNUSToken');
 
 module.exports = async function (deployer, network, accounts) {
-    await deployer.deploy(GeniusAI);
+    await deployer.deploy(PolyGNUSToken);
 };
