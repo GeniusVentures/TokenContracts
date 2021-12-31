@@ -24,17 +24,21 @@ contract GeniusAI is Initializable, UUPSUpgradeable, PolyGNUSToken {
 
   function initialize() initializer public {
     __AccessControl_init();
-    __UUPSUpgradeable_init();
 
-    __PolyGNUSToken_init();
-
+    // need to grant roles before init of UUPS ERC1967Proxy
     address creator = _msgSender();
+
     _grantRole(DEFAULT_ADMIN_ROLE, creator);
     _grantRole(URI_SETTER_ROLE, creator);
     _grantRole(PAUSER_ROLE, creator);
     _grantRole(MINTER_ROLE, creator);
     _grantRole(UPGRADER_ROLE, creator);
     _grantRole(PROXY_ROLE, creator);
+
+    __UUPSUpgradeable_init();
+
+    __PolyGNUSToken_init();
+
 
   }
 
