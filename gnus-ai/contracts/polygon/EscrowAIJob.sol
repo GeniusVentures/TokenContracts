@@ -26,6 +26,7 @@ contract EscrowAIJob is ConditionalEscrow {
         // TODO: zkSnark check based on some random seed and macro job index and hashes.
         //require(_payees.)
         // logic here for allowing withdrawals to a payee
+        return false;
     }
 
     function _addPayees(address[] memory payees) internal {

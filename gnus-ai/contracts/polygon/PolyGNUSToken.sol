@@ -11,7 +11,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 
 /// @custom:security-contact support@gnus.ai
-contract PolyGNUSToken is Initializable, ERC1155Upgradeable, AccessControlUpgradeable, PausableUpgradeable,
+contract PolyGNUSToken is ERC1155Upgradeable, AccessControlUpgradeable, PausableUpgradeable,
     ERC1155BurnableUpgradeable, ERC1155SupplyUpgradeable
 {
     bytes32 public constant URI_SETTER_ROLE = keccak256("URI_SETTER_ROLE");
@@ -28,10 +28,10 @@ contract PolyGNUSToken is Initializable, ERC1155Upgradeable, AccessControlUpgrad
     uint256 public constant GNUS_DECIMALS = 10 ** 18;
     uint256 public constant GNUS_MAX_SUPPLY = 50000000 * GNUS_DECIMALS;  // 50 million tokens
     string private constant GNUS_URI = "https://nft.gnus.ai/{id}";
-    uint256 public GNUS_TOKEN_ID = 0;
+    uint256 public constant GNUS_TOKEN_ID = 0;
     address superAdmin;
 
-    uint256 public NFTCurIndex = GNUS_TOKEN_ID + 1;         // can be either token or NFT starts from ID 1
+    uint256 public NFTCurIndex;         // can be either token or NFT starts from GNUS_TOKEN_ID+1
 
     struct Token {
         string name;
@@ -66,9 +66,6 @@ contract PolyGNUSToken is Initializable, ERC1155Upgradeable, AccessControlUpgrad
     string private _reserved6;
 
     bytes32 public constant _reserved7 = keccak256("RESERVED7");
-
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() initializer {}
 
     function __PolyGNUSToken_init() initializer internal {
         __ERC1155_init("");
