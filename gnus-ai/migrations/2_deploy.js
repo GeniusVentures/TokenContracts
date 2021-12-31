@@ -1,5 +1,9 @@
 const PolyGNUSToken = artifacts.require('PolyGNUSToken');
 
-module.exports = async function (deployer, network, accounts) {
-    await deployer.deploy(PolyGNUSToken);
-};
+const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+
+module.exports = async function (deployer) {
+    const instance = await deployProxy(PolyGNUSToken, { deployer });
+    console.log('Deployed', instance.address);
+}
+
