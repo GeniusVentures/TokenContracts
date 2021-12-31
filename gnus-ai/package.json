@@ -14,27 +14,26 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.1.0",
-    "@typechain/truffle-v5": "^5.0.0",
+    "@openzeppelin/contracts": "^4.4.1",
+    "@openzeppelin/contracts-upgradeable": "^4.4.1",
+    "@openzeppelin/truffle-upgrades": "^1.11.0",
+    "@typechain/truffle-v5": "^5.1.0",
     "@types/chai": "^4.0.0",
-    "@types/mocha": "^8.2.2",
+    "@types/mocha": "^8.2.3",
     "@types/web3": "^1.2.2",
     "bn-chai": "^1.0.1",
     "bn.js": "^4.11.0",
-    "catch-exit": "^1.1.0",
+    "catch-exit": "^1.2.2",
     "chai": "^4.3.4",
     "dotenv": "^10.0.0",
     "ganache-cli": "^6.12.2",
-    "truffle": "^5.3.7",
+    "truffle": "^5.4.26",
     "truffle-hdwallet-provider": "^1.0.17",
     "truffle-plugin-verify": "^0.5.20",
     "truffle-typings": "^1.0.8",
-    "ts-node": "^10.0.0",
-    "typechain": "^5.0.0",
-    "typescript": "^4.3.2",
-    "yarn": "^1.22.10"
-  },
-  "devDependencies": {
-    "@openzeppelin/truffle-upgrades": "^1.11.0"
+    "ts-node": "^10.4.0",
+    "typechain": "^5.2.0",
+    "typescript": "^4.5.4",
+    "yarn": "^1.22.17"
   }
 }
