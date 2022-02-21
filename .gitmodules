@@ -1,0 +1,3 @@
+[submodule "gnus-ai"]
+	path = gnus-ai
+	url = https://github.com/GeniusVentures/gnus-ai.git
