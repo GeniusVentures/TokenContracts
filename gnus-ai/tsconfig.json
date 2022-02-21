@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "lib": ["ES2018", "DOM"],
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "target": "es2018",
+    "module": "commonjs",
     "strict": true,
-    "target": "ES2018",
-    "sourceMap": true,
     "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["@types/node", "@types/chai", "@types/mocha", "truffle-typings"]
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false
   },
-
-  "include": ["./build/types/*.ts", "./test/*.ts"]
-
+  "include": ["./scripts", "./test", "./typechain"],
+  "files": ["./hardhat.config.ts"]
 }

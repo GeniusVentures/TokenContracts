@@ -1,7 +1,0 @@
-
-#!/bin/sh
-# 50,000 + 1,000 for gas
-ganache-cli -e 51000 -a 5 -q >/dev/null &
-GANACHE_PID=$!
-truffle test
-kill $GANACHE_PID

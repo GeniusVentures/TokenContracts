@@ -1,7 +1,12 @@
 
 #!/bin/sh
 # 50,000 + 1,000 for gas
-ganache-cli -e 51000 -a 5 -q >/dev/null &
+ganache-cli -e 51000 -a 5 -q >ganache-cli.log &
 GANACHE_PID=$!
+echo 'Waiting ganache-cli to start up'
+tail -f ganache-cli.log | while read LOGLINE
+do
+   [[ "${LOGLINE}" == *"Listening on 127.0.0.1"* ]] && pkill -P $$ tail
+done
 truffle test
 kill $GANACHE_PID
