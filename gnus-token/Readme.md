@@ -24,7 +24,7 @@ Use `yarn generate` to generate the typescript files for the smart contract unde
 
 Make sure ganache-cli is installed `npm -g install ganache-cli`
 
-`,/truffle-test` will launch ganache-cli in background and run tests and then kill ganache-cli
+`./truffle-test` will launch ganache-cli in background and run tests and then kill ganache-cli
 
 ## ETH Mainnet Contract Address
 

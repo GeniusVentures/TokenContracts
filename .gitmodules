@@ -1,0 +1,3 @@
+[submodule "ozdiamonds"]
+	path = ozdiamonds
+	url = git@github.com:GeniusVentures/ozdiamonds.git

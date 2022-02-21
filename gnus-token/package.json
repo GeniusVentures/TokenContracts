@@ -6,7 +6,7 @@
   "scripts": {
     "generate": "truffle compile && typechain --target truffle-v5 --out-dir build/types './build/**/*.json'",
     "prepare": "yarn generate",
-    "test": "ganache-cli -a 5 -e 50000 && truffle test"
+    "test": "truffle-test"
   },
   "author": "",
   "license": "MIT",
