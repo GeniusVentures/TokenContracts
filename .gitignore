@@ -1,3 +1,4 @@
 .idea
 test/package-lock.json
 test/node_modules
+ZoKrates/Cargo.lock
