@@ -1,6 +1,6 @@
 [submodule "gnus-ai"]
 	path = gnus-ai
-	url = https://github.com/GeniusVentures/gnus-ai.git
+	url = git@github.com/GeniusVentures/gnus-ai.git
 [submodule "ZoKrates"]
 	path = ZoKrates
 	url = https://github.com/ZoKrates/ZoKrates
