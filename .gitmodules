@@ -1,10 +1,10 @@
 [submodule "gnus-ai"]
 	path = gnus-ai
-	url = git@github.com/GeniusVentures/gnus-ai.git
+	url = ../../gnus-ai.git
 [submodule "ZoKrates"]
 	path = ZoKrates
 	url = https://github.com/ZoKrates/ZoKrates
 	ignore = dirty
 [submodule "sushi-assets"]
 	path = sushi-assets
-	url = git@github.com:GeniusVentures/sushi-assets.git
+	url = ../../sushi-assets.git
