@@ -8,3 +8,6 @@
 [submodule "sushi-assets"]
 	path = sushi-assets
 	url = ../sushi-assets.git
+[submodule "erc20-gnus-proxy"]
+	path = erc20-gnus-proxy
+	url = ../erc20-gnus-proxy
