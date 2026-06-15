@@ -76,7 +76,13 @@
       "Bash(clang-tidy --verify-config src/base/logger.hpp -- -std=c++17)",
       "Bash(clang-tidy src/base/ScaledInteger.hpp -- -std=c++17 -I src -I thirdparty)",
       "Bash(/opt/homebrew/bin/clang-format --dry-run --style=file src/base/ScaledInteger.hpp)",
-      "Bash(wc -l /Users/Shared/SSDevelopment/Development/GeniusVentures/GeniusNetwork/documentation/docs/technical-information/software-engineering-handbook/c++-coding-standards.md)"
+      "Bash(wc -l /Users/Shared/SSDevelopment/Development/GeniusVentures/GeniusNetwork/documentation/docs/technical-information/software-engineering-handbook/c++-coding-standards.md)",
+      "Skill(gsd-map-codebase)",
+      "Skill(gsd-map-codebase:*)",
+      "Bash(gh project *)",
+      "Skill(gsd-inbox)",
+      "Skill(gsd-inbox:*)",
+      "Bash(gh repo *)"
     ],
     "ask": [
       "Bash(git push *)"
