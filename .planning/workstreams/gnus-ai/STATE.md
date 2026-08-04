@@ -1,20 +1,8 @@
----
-workstream: gnus-ai
-created: 2026-07-02
----
+# gnus-ai Workstream State
 
-# Project State
+**Created:** 2026-07-21
+**Submodule:** gnus-ai
+**Planning Root:** gnus-ai/.planning/
 
-## Current Position
-**Status:** Not started
-**Current Phase:** None
-**Last Activity:** 2026-07-02
-**Last Activity Description:** Workstream created
-
-## Progress
-**Phases Complete:** 0
-**Current Plan:** N/A
-
-## Session Continuity
-**Stopped At:** N/A
-**Resume File:** None
+All edits for this workstream happen inside the `gnus-ai/` submodule.
+Planning artifacts are stored at `gnus-ai/.planning/`.
