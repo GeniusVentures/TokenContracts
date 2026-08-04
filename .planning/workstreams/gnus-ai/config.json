@@ -1,0 +1,9 @@
+{
+  "submodule": "gnus-ai",
+  "planning_root": "gnus-ai/.planning",
+  "description": "gnus-ai - smart contracts for the GNUS.ai network/OS",
+  "workflow": {
+    "nyquist_validation": false,
+    "_auto_chain_active": false
+  }
+}
