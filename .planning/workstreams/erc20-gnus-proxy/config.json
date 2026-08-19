@@ -1,0 +1,9 @@
+{
+  "submodule": "erc20-gnus-proxy",
+  "planning_root": "erc20-gnus-proxy/.planning",
+  "description": "erc20-gnus-proxy - standalone ERC-20 proxy diamond contract over GNUS.ai ERC-1155 child tokens",
+  "workflow": {
+    "nyquist_validation": false,
+    "_auto_chain_active": false
+  }
+}

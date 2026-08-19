@@ -22,6 +22,14 @@ Maps nested submodules inside `TokenContracts/`. Planning artifacts live in subm
 
 All nested submodules use submodule `.planning/` for workstream tracking. If a nested submodule needs independent workstreams, initialize its own `.planning/` with `/gsd:new-project`.
 
+## Workstreams
+
+| Workstream | Submodule | Planning Root | Created |
+|---|---|---|---|
+| `gnus-ai` | `gnus-ai/` | `gnus-ai/.planning/` | 2026-07-21 |
+| `erc20-gnus-proxy` | `erc20-gnus-proxy/` | `erc20-gnus-proxy/.planning/` | 2026-08-19 (Phase 11 scope split — see `gnus-ai/.planning/phases/11-erc-20-proxy-hardening/11-CONTEXT.md`) |
+
 ---
 
 *Generated: 2026-07-06*
+*Updated: 2026-08-19 — added erc20-gnus-proxy workstream*
