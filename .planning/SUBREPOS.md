@@ -29,6 +29,10 @@ All nested submodules use submodule `.planning/` for workstream tracking. If a n
 | `gnus-ai` | `gnus-ai/` | `gnus-ai/.planning/` | 2026-07-21 |
 | `erc20-gnus-proxy` | `erc20-gnus-proxy/` | `erc20-gnus-proxy/.planning/` | 2026-08-19 (Phase 11 scope split — see `gnus-ai/.planning/phases/11-erc-20-proxy-hardening/11-CONTEXT.md`) |
 
+## Milestone Planning (parent-level, docs only)
+
+Cross-repo milestones are planned HERE at `TokenContracts/.planning/` (PROJECT.md / REQUIREMENTS.md / ROADMAP.md) — no gsd-sdk workflows operate at the parent. Phases execute inside the submodule planning root listed in each roadmap phase; flip `active-workstream` when execution moves between repos. v1.1 (started 2026-08-28) is the first parent-hosted milestone.
+
 ---
 
 *Generated: 2026-07-06*
