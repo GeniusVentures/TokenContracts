@@ -7,9 +7,9 @@
 
 ### ERC-20 Proxy (executes in `erc20-gnus-proxy/`)
 
-- [ ] **PROXY-01**: Real amount-specific ERC-20 allowances on the erc20-gnus-proxy contract — `_allowances` mapping; `approve(spender, amount)` sets a real allowance (NOT `setApprovalForAll`); `transferFrom()` spends via `_spendAllowance()`. Carried from gnus-ai v1.0 (deferred); already Active in `erc20-gnus-proxy/.planning/PROJECT.md`.
-- [ ] **PROXY-02**: Immutable proxy configuration — one-shot initialization of `childTokenId`, `erc1155Contract`, `name`, `symbol` on the erc20-gnus-proxy contract. Carried from gnus-ai v1.0 (deferred); already Active in the sibling.
-- [ ] **PROXY-04**: Nested gnus-ai-contracts submodule pin bumped to ≥ d731384 in erc20-gnus-proxy (redeem-adapter parity with the Phase 11 `GNUSRedeemAdapter`, issue #9).
+- [x] **PROXY-01**: Real amount-specific ERC-20 allowances on the erc20-gnus-proxy contract — `_allowances` mapping; `approve(spender, amount)` sets a real allowance (NOT `setApprovalForAll`); `transferFrom()` spends via `_spendAllowance()`. Carried from gnus-ai v1.0 (deferred); already Active in `erc20-gnus-proxy/.planning/PROJECT.md`.
+- [x] **PROXY-02**: Immutable proxy configuration — one-shot initialization of `childTokenId`, `erc1155Contract`, `name`, `symbol` on the erc20-gnus-proxy contract. Carried from gnus-ai v1.0 (deferred); already Active in the sibling.
+- [x] **PROXY-04**: Nested gnus-ai-contracts submodule pin bumped to ≥ d731384 in erc20-gnus-proxy (redeem-adapter parity with the Phase 11 `GNUSRedeemAdapter`, issue #9).
 
 ### Bridge Activation (executes in `gnus-ai/`)
 
@@ -58,9 +58,9 @@
 
 | Requirement | Phase | Status |
 | ----------- | ----- | ------ |
-| PROXY-01    | 16    | Pending |
-| PROXY-02    | 16    | Pending |
-| PROXY-04    | 16    | Pending |
+| PROXY-01    | 16    | Satisfied (2026-08-30, PR #12) |
+| PROXY-02    | 16    | Satisfied (2026-08-30, PR #12) |
+| PROXY-04    | 16    | Satisfied (2026-08-30, PR #12) |
 | BRIDGE-17   | 20    | Pending |
 | TEST-04     | 17    | Pending |
 | TEST-05     | 17    | Pending |
